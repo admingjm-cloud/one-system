@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONE SYSTEM | High Jewelry Salon</title>
+    
+    <!-- 引入优雅的日式衬线字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ================= 核心变量 ================= */
+        :root {
+            --bg-main: #ffffff;
+            --bg-light: #fbfbfb; 
+            --text-main: #333333;
+            --text-muted: #777777;
+            --gold: #bda16b; 
+            --border-light: #eceae4; 
+            
+            --font-en: 'Cormorant Garamond', serif;
+            --font-ja: 'Noto Serif JP', serif;
+            --font-zh: 'Noto Serif SC', serif;
+        }
+
+        /* 严格区分中日文显示 */
+        body.lang-ja .zh { display: none !important; }
+        body.lang-zh .ja { display: none !important; }
+        body.lang-ja { font-family: var(--font-ja); }
+        body.lang-zh { font-family: var(--font-zh); }
+
+        /* ================= 基础重置 ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 2.4; font-weight: 300; letter-spacing: 0.1em; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: all 0.4s ease; }
+        ul { list-style: none; }
+        img { width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f5f5f5; }
+        
+        /* ================= 导航 (Header) ================= */
+        header {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.98); z-index: 1000;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 30px 0 15px; transition: all 0.5s ease;
+            border-bottom: 1px solid var(--border-light);
+        }
+        header.scrolled { padding: 15px 0 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+        
+        .header-top { width: 100%; max-width: 1400px; display: flex; justify-content: center; position: relative; }
+        .logo { font-size: 1.6rem; font-weight: 400; color: var(--text-main); letter-spacing: 0.25em; font-family: var(--font-en); text-transform: uppercase; text-align: center; line-height: 1.2; }
+        .logo span { display: block; font-size: 0.8rem; letter-spacing: 0.3em; color: var(--gold); margin-top: 5px; font-style: italic; }
+        
+        .lang-switch { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); }
+        .lang-switch select {
+            background: transparent; color: var(--text-muted); border: none; border-bottom: 1px solid var(--border-light);
+            font-family: var(--font-en); font-size: 0.8rem; cursor: pointer; outline: none; padding-bottom: 3px; letter-spacing: 0.1em;
+        }
+
+        .nav-links { display: flex; gap: 4rem; margin-top: 25px; }
+        .nav-links a { font-size: 0.8rem; letter-spacing: 0.2em; color: var(--text-main); font-family: var(--font-en); text-transform: uppercase; position: relative; padding-bottom: 5px; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background-color: var(--gold); transition: all 0.4s ease; transform: translateX(-50%); }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ================= 首屏 (Hero) ================= */
+        .hero { position: relative; width: 100%; height: 90vh; margin-top: 120px; overflow: hidden; }
+        
+        /* ！！修改为本地图片路径！！ */
+        .hero-bg {
+            width: 100%; height: 100%;
+            background-image: url('images/hero-bg.jpg');
+            background-size: cover; background-position: center;
+            animation: gentleZoom 25s infinite alternate ease-in-out;
+        }
+        @keyframes gentleZoom { 0% { transform: scale(1); } 100% { transform: scale(1.06); } }
+        
+        .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%); }
+        
+        .hero-text {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 2; text-align: center; color: #fff; width: 100%;
+        }
+        .hero-text h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; letter-spacing: 0.25em; margin-bottom: 1.5rem; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .hero-text p { font-size: 1rem; letter-spacing: 0.4em; font-family: var(--font-en); text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+
+        /* ================= 品牌理念 ================= */
+        .concept-section { padding: 120px 5%; text-align: center; }
+        .sec-title-en { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.3em; display: block; margin-bottom: 1rem; font-family: var(--font-en); text-transform: uppercase; }
+        .sec-title-ja { font-size: 1.8rem; font-weight: 400; letter-spacing: 0.2em; color: var(--text-main); margin-bottom: 3rem; }
+        .concept-text { max-width: 800px; margin: 0 auto; }
+        .concept-text p { font-size: 1rem; line-height: 2.6; color: var(--text-muted); text-align: justify; text-align-last: center; }
+
+        /* ================= 图文布局 ================= */
+        .split-row { display: flex; width: 100%; min-height: 650px; }
+        .split-row.reverse { flex-direction: row-reverse; background-color: var(--bg-light); }
+        
+        .split-img { width: 50%; position: relative; overflow: hidden; }
+        .split-img img { transition: transform 2s ease; filter: brightness(0.95); }
+        .split-row:hover .split-img img { transform: scale(1.04); filter: brightness(1); }
+        
+        .split-content { width: 50%; display: flex; flex-direction: column; justify-content: center; padding: 8% 10%; }
+        .split-cat { font-family: var(--font-en); color: var(--gold); font-size: 0.8rem; letter-spacing: 0.25em; margin-bottom: 1.5rem; text-transform: uppercase; }
+        .split-title { font-size: 1.8rem; font-weight: 300; color: var(--text-main); letter-spacing: 0.15em; margin-bottom: 2.5rem; line-height: 1.6; }
+        .split-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 2.4; margin-bottom: 4rem; text-align: justify; }
+        
+        .link-arrow { display: inline-flex; align-items: center; color: var(--text-main); font-size: 0.8rem; letter-spacing: 0.2em; font-family: var(--font-en); text-transform: uppercase; }
+        .link-arrow::after { content: ''; display: inline-block; width: 40px; height: 1px; background: var(--text-main); margin-left: 15px; transition: width 0.4s ease; }
+        .link-arrow:hover { color: var(--gold); }
+        .link-arrow:hover::after { width: 70px; background: var(--gold); }
+
+        /* ================= 最新资讯 ================= */
+        .news-section { padding: 120px 5%; border-top: 1px solid var(--border-light); }
+        .news-list { max-width: 900px; margin: 0 auto; border-top: 1px solid var(--border-light); }
+        .news-item { display: flex; align-items: center; padding: 2.5rem 0; border-bottom: 1px solid var(--border-light); transition: all 0.4s ease; cursor: pointer; }
+        .news-item:hover { background-color: var(--bg-light); padding-left: 20px; }
+        .news-date { font-family: var(--font-en); color: var(--gold); font-size: 0.9rem; width: 160px; letter-spacing: 0.15em; }
+        .news-title { font-size: 0.95rem; color: var(--text-main); flex: 1; transition: color 0.3s; }
+        .news-item:hover .news-title { color: var(--gold); }
+
+        /* ================= 沙龙信息 ================= */
+        .access-section { padding: 120px 5%; background: var(--bg-light); }
+        .info-wrap { display: flex; gap: 6rem; max-width: 1000px; margin: 0 auto; align-items: center; }
+        .info-img { flex: 1; aspect-ratio: 4/5; overflow: hidden; }
+        
+        .info-details { flex: 1; }
+        .info-table { width: 100%; border-collapse: collapse; margin-bottom: 3rem; }
+        .info-table th, .info-table td { padding: 1.2rem 0; border-bottom: 1px dotted var(--border-light); text-align: left; font-size: 0.9rem; }
+        .info-table th { width: 35%; font-weight: 400; color: var(--text-main); }
+        .info-table td { color: var(--text-muted); font-family: var(--font-en); }
+        
+        .btn-reserve { display: inline-block; padding: 18px 0; width: 100%; text-align: center; border: 1px solid var(--text-main); color: var(--text-main); font-size: 0.85rem; letter-spacing: 0.25em; transition: all 0.5s ease; font-family: var(--font-en); text-transform: uppercase; }
+        .btn-reserve:hover { background: var(--text-main); color: #fff; }
+
+        /* ================= 页脚 ================= */
+        footer { padding: 6rem 5% 3rem; text-align: center; border-top: 1px solid var(--border-light); background: #fff; }
+        footer .logo { font-size: 1.5rem; margin-bottom: 3rem; position: static; transform: none; }
+        .footer-links { display: flex; justify-content: center; gap: 3rem; margin-bottom: 4rem; flex-wrap: wrap; }
+        .footer-links a { font-size: 0.8rem; letter-spacing: 0.15em; color: var(--text-muted); font-family: var(--font-en); text-transform: uppercase; }
+        .copyright { font-size: 0.75rem; color: #b3b3b3; letter-spacing: 0.15em; font-family: var(--font-en); }
+
+        /* ================= 动画与响应式 ================= */
+        .fade-up { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .logo { margin-bottom: 10px; }
+            .header-top { justify-content: center; }
+            .lang-switch { position: absolute; right: 0; top: 10px; transform: none; }
+            .hero { margin-top: 100px; height: 70vh; }
+            .split-row, .split-row.reverse { flex-direction: column; min-height: auto; }
+            .split-img { width: 100%; aspect-ratio: 4/3; }
+            .split-content { width: 100%; padding: 15% 5%; }
+            .news-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 1.5rem 0; }
+            .news-item:hover { padding-left: 0; }
+            .info-wrap { flex-direction: column; gap: 3rem; }
+        }
+    </style>
+</head>
+<body class="lang-ja">
+
+    <header id="header">
+        <div class="header-top">
+            <div class="logo">
+                ONE SYSTEM
+                <span>High Jewelry</span>
+            </div>
+            <div class="lang-switch">
+                <select id="lang-select" onchange="changeLanguage(this.value)">
+                    <option value="ja">JP</option>
+                    <option value="zh">ZH</option>
+                </select>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#concept"><span class="ja">コンセプト</span><span class="zh">品牌理念</span></a>
+            <a href="#bridal"><span class="ja">ブライダル</span><span class="zh">婚嫁定制</span></a>
+            <a href="#jewelry"><span class="ja">ハイジュエリー</span><span class="zh">典藏珠宝</span></a>
+            <a href="#atelier"><span class="ja">アトリエ</span><span class="zh">匠人工坊</span></a>
+            <a href="#news"><span class="ja">お知らせ</span><span class="zh">最新资讯</span></a>
+        </nav>
+    </header>
+
+    <!-- 首屏 -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-text fade-up">
+            <h1>
+                <span class="ja">永遠の美しさを。</span>
+                <span class="zh">致敬永恒之美。</span>
+            </h1>
+            <p>ONE SYSTEM JEWELRY</p>
+        </div>
+    </section>
+
+    <!-- 品牌理念 -->
+    <section id="concept" class="concept-section fade-up">
+        <div class="container">
+            <span class="sec-title-en">Concept</span>
+            <h2 class="sec-title-ja"><span class="ja">輝きは、永遠の証。</span><span class="zh">璀璨光芒，永恒之证。</span></h2>
+            <div class="concept-text">
+                <p>
+                    <span class="ja">ONE SYSTEMは、選び抜かれた極上のダイヤモンドと、洗練を極めたデザインで、お客様の人生を美しく彩るハイジュエリーサロンです。<br><br>お二人の門出を祝うブライダルリングから、代々受け継がれるマスターピース、そして大切な想い出を蘇らせるリフォームまで。私たちは宝石本来の純粋な輝きと、それを極限まで引き出す「職人の手仕事」を何よりも大切にしています。日常のなかに、永遠の価値を。</span>
+                    <span class="zh">ONE SYSTEM 秉持极简优雅的设计哲学，甄选最高品质的无暇美钻，为您点缀生活中的每一个动人时刻。<br><br>从见证真爱的婚嫁定制对戒，到值得家族世代传承的高级典藏珠宝，再到唤醒珍贵记忆的传世珠宝重塑。我们始终将激发宝石纯粹光芒的“顶级匠人手工艺”视为品牌的最核心价值。于日常之中，彰显永恒。</span>
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 1. 婚嫁系列 ！！修改为本地图片路径！！ -->
+    <section id="bridal" class="split-row fade-up">
+        <div class="split-img">
+            <img src="images/bridal-ring.jpg" alt="Bridal Collection">
+        </div>
+        <div class="split-content">
+            <span class="split-cat">Bridal Collection</span>
+            <h3 class="split-title">
+                <span class="ja">ブライダル ジュエリー</span>
+                <span class="zh">高级婚嫁定制</span>
+            </h3>
+            <p class="split-desc">
+                <span class="ja">永遠の愛を誓うお二人のための特別なコレクション。GIA基準を満たした最高評価のダイヤモンドのみを厳選し、日本の熟練職人が一つひとつ丁寧に仕立てます。指先に馴染むなめらかな着け心地と、タイムレスな美しさをお約束します。</span>
+                <span class="zh">专为见证永恒真爱而生的高级定制系列。严苛甄选符合 GIA 国际最高评级的璀璨美钻，由资深珠宝金匠为您专属手工打造。我们向您承诺最极致丝滑的佩戴触感，以及跨越时代的经典之美。</span>
+            </p>
+            <div>
+                <a href="#access" class="link-arrow"><span class="ja">詳細を見る</span><span class="zh">探索婚嫁系列</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. 典藏珠宝 ！！修改为本地图片路径！！ -->
+    <section id="jewelry" class="split-row reverse fade-up">
+        <div class="split-img">
+            <img src="images/high-jewelry.jpg" alt="High Jewelry">
+        </div>
+        <div class="split-content">
+            <span class="split-cat">High & Fine Jewelry</span>
+            <h3 class="split-title">
+                <span class="ja">ハイ＆ファイン ジュエリー</span>
+                <span class="zh">典藏与高级珠宝</span>
+            </h3>
+            <p class="split-desc">
+                <span class="ja">稀少なプレシャスストーンと卓越した彫金技術が融合したマスターピース。日常の装いをワンランク格上げするシンプルなネックレスから、特別な日を飾るハイエンドなコレクションまで、お客様の個性を引き立てる至極の輝きをご用意しております。</span>
+                <span class="zh">稀世珍贵宝石与顶级金雕工艺的完美融合。从能够极致提升日常穿搭品位的简约钻石项链，到为您出席人生重要时刻量身打造的殿堂级典藏首饰，散发令人屏息的摄人华彩。</span>
+            </p>
+            <div>
+                <a href="#access" class="link-arrow"><span class="ja">詳細を見る</span><span class="zh">鉴赏珠宝系列</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 工坊与修复 ！！修改为本地图片路径！！ -->
+    <section id="atelier" class="split-row fade-up">
+        <div class="split-img">
+            <img src="images/atelier-craft.jpg" alt="Atelier Craftsmanship">
+        </div>
+        <div class="split-content">
+            <span class="split-cat">Atelier & Reform</span>
+            <h3 class="split-title">
+                <span class="ja">リフォーム・修理・オーダー</span>
+                <span class="zh">匠人工坊与重塑修复</span>
+            </h3>
+            <p class="split-desc">
+                <span class="ja">代々受け継がれてきた大切な宝石を、現代のライフスタイルに合わせたモダンなデザインへ蘇らせる「リフォーム」。また、サイズ直し、石の緩みチェック、新品仕上げ（ポリッシュ）など、末永くご愛用いただくための細かなメンテナンスも自社工房にて承ります。</span>
+                <span class="zh">将世代传承的珍贵宝石重新镶嵌，焕发契合现代审美的摩登姿态。我们自有的高级工坊同时为您提供戒围无痕调整、镶爪加固、超声波清洁以及彻底抹去岁月划痕的极致翻新抛光服务。</span>
+            </p>
+            <div>
+                <a href="#access" class="link-arrow"><span class="ja">ご相談はこちら</span><span class="zh">预约工坊服务</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 最新资讯 -->
+    <section id="news" class="news-section fade-up">
+        <div class="container">
+            <div class="sec-title-wrap">
+                <span class="en-title">News & Topics</span>
+                <h2 class="sec-title-ja"><span class="ja">お知らせ</span><span class="zh">最新资讯</span></h2>
+            </div>
+            
+            <div class="news-list">
+                <div class="news-item">
+                    <span class="news-date">2025.10.15</span>
+                    <div class="news-title">
+                        <span class="ja">秋のブライダルフェア開催のお知らせ。ご成約でシークレットストーンをプレゼント。</span>
+                        <span class="zh">秋季高级婚嫁珠宝展正式启幕。展期内定制对戒尊享内圈宝石镶嵌。</span>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-date">2025.09.02</span>
+                    <div class="news-title">
+                        <span class="ja">新作「ボタニカル コレクション」を発表いたしました。</span>
+                        <span class="zh">全新高级珠宝系列「Botanical 植物志」震撼发布。</span>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <span class="news-date">2025.08.18</span>
+                    <div class="news-title">
+                        <span class="ja">稀少な「ファンシー ピンク ダイヤモンド（2.5ct）」特別展示会のご案内。</span>
+                        <span class="zh">传世瑰宝：罕见 2.5克拉艳彩粉钻（Fancy Pink）私密鉴赏会。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 沙龙信息 -->
+    <section id="access" class="access-section fade-up">
+        <div class="container">
+            <div class="sec-title-wrap">
+                <span class="en-title">Salon Info & Access</span>
+                <h2 class="sec-title-ja"><span class="ja">サロン案内</span><span class="zh">沙龙店铺信息</span></h2>
+            </div>
+            
+            <div class="info-wrap">
+                <!-- ！！修改为本地图片路径！！ -->
+                <div class="info-img">
+                    <img src="images/salon-access.jpg" alt="Salon Details">
+                </div>
+                <div class="info-details">
+                    <h3 style="font-size: 1.4rem; font-weight: 300; margin-bottom: 2.5rem; letter-spacing: 0.15em; color: var(--text-main); border-bottom: 1px solid var(--gold); padding-bottom: 1rem; display: inline-block;">ONE SYSTEM Salon</h3>
+                    <table class="info-table">
+                        <tr>
+                            <th><span class="ja">所在地</span><span class="zh">沙龙地址</span></th>
+                            <td><span class="ja">東京都台東区台東4丁目25-5 601室</span><span class="zh">东京都台东区台东4丁目25-5 601室</span></td>
+                        </tr>
+                        <tr>
+                            <th><span class="ja">電話番号</span><span class="zh">联系电话</span></th>
+                            <td style="font-family: var(--font-en);">03-6821-3254</td>
+                        </tr>
+                        <tr>
+                            <th><span class="ja">営業時間</span><span class="zh">营业时间</span></th>
+                            <td style="font-family: var(--font-en);">11:00 - 19:00</td>
+                        </tr>
+                        <tr>
+                            <th><span class="ja">定休日</span><span class="zh">休息日</span></th>
+                            <td><span class="ja">毎週火曜日</span><span class="zh">每周二</span></td>
+                        </tr>
+                        <tr>
+                            <th><span class="ja">ご予約</span><span class="zh">预约制度</span></th>
+                            <td><span class="ja">完全予約制 (事前にご連絡ください)</span><span class="zh">完全预约制 (请提前致电或邮件联系)</span></td>
+                        </tr>
+                    </table>
+                    
+                    <a href="mailto:info@onesystem.co.jp" class="btn-reserve">
+                        <span class="ja">来店予約・お問い合わせ</span><span class="zh">联系我们预约专属鉴赏</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 极简页脚 -->
+    <footer>
+        <div class="container">
+            <div class="logo" style="margin-bottom: 2rem;">
+                ONE SYSTEM
+                <span style="display: block; font-size: 0.8rem; margin-top: 5px;">High Jewelry</span>
+            </div>
+            <div class="footer-links">
+                <a href="#concept">Concept</a>
+                <a href="#bridal">Bridal</a>
+                <a href="#jewelry">Jewelry</a>
+                <a href="#atelier">Atelier & Reform</a>
+                <a href="#news">News</a>
+                <a href="#access">Access</a>
+            </div>
+            <div class="copyright">
+                &copy; 2026 ONE SYSTEM JEWELRY. ALL RIGHTS RESERVED.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function changeLanguage(lang) {
+            document.body.className = 'lang-' + lang;
+            document.documentElement.lang = lang;
+        }
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) { header.classList.add('scrolled'); } 
+            else { header.classList.remove('scrolled'); }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const faders = document.querySelectorAll('.fade-up');
+            const appearOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+            const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                });
+            }, appearOptions);
+            faders.forEach(fader => { appearOnScroll.observe(fader); });
+        });
+    </script>
+</body>
+</html>
